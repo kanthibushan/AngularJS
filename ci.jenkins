@@ -20,6 +20,7 @@ pipeline {
 				
 			 dir ('/var/lib/jenkins/workspace/Beanstalk_Deployment/build') {
 				sh  '''
+					rm -rf test.zip
 					zip test.zip *
 					mv test.zip test.war
 					'''	
