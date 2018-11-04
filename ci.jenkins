@@ -37,8 +37,8 @@ pipeline {
 			
 		stage('Deploy UI') {
             steps {
-				sh  "aws elasticbeanstalk create-application-version --application-name "testAngularJS" --version-label "test-${SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.war" --source-bundle S3Bucket="staging-116760703223",S3Key="ui/test-${SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.war" --process --region us-east-2"
-				sh "aws elasticbeanstalk update-environment --environment-name=testAngularJS --version-label "test-${SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.war" --region us-east-2"
+				sh  "aws elasticbeanstalk create-application-version --application-name testAngularJS --version-label test-${SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.war --source-bundle S3Bucket=staging-116760703223,S3Key=ui/test-${SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.war --process --region us-east-2"
+				sh "aws elasticbeanstalk update-environment --environment-name=testAngularJS --version-label test-${SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.war --region us-east-2"
 				}
         }
         
