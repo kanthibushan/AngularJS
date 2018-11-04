@@ -23,7 +23,7 @@ pipeline {
 					rm -rf test.zip test.war
 					zip test.zip *
 				     '''
-					sh 'mv test.zip test-"${params.SNAPSHOT_VERSION}.${env.BUILD_NUMBER}".war'
+					sh 'mv test.zip test-"${SNAPSHOT_VERSION}.${env.BUILD_NUMBER}".war'
 				}
 			}
 		}
