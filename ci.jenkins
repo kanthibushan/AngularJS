@@ -11,10 +11,18 @@ pipeline {
 		steps {
 			 dir('AngularJS') {
                     sh '''
+					
                     npm install
-                    gulp build 
-                '''
+                    gulp build
+					
+					'''
                 }
+				
+			 dir ('/var/lib/jenkins/workspace/Beanstalk_Deployment/build') {
+				sh  '''
+					zip test.zip *
+					mv test.zip test.war
+					'''	
 			}
 		}
 	}
