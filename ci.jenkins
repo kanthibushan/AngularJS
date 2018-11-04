@@ -22,7 +22,7 @@ pipeline {
 				sh  '''
 					rm -rf test.zip test.war
 					zip test.zip *
-					mv test.zip test.war
+					mv test.zip test-${params.SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.war
 					'''	
 				}
 			}
@@ -33,6 +33,19 @@ pipeline {
                 echo "Publishing test.war to S3Bucket"
 				s3Upload(bucket:"staging-116760703223", path:'ui/', file:"test.war", workingDir:"${env.WORKSPACE}/build")
 			}
-		}	
+		}
+			
+		stage('Deploy UI') {
+            steps {
+				script{
+					sh  """
+						aws elasticbeanstalk create-application-version --application-name "testAngularJS" --version-label "test-${params.SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.jar" --source-bundle S3Bucket="staging-116760703223",S3Key="ui/test.jar" --process --region us-east-2
+					
+						aws elasticbeanstalk update-environment --environment-name=testAngularJS --version-label "test-${params.SNAPSHOT_VERSION}.${env.BUILD_NUMBER}.jar" --region us-east-2
+					"""
+				}
+            }
+        }
+			
 	}
 }
