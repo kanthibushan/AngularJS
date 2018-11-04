@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+	parameters {
+        string(defaultValue: '1.7.0', description: 'Specify the build version to promote to QA', name: 'SNAPSHOT_VERSION')
+		booleanParam (defaultValue: false, description: 'Skip Backend Test', name : 'skipBackendTests')
+		booleanParam (defaultValue: false, description: 'Seelect this option if need to restore DB from RDS Snapshot.', name : 'RDSSnapshot')
+    }
+	
+    stages {
+        stage('Compile UI') {
+		steps {
+			 dir('AngularJS') {
+                    sh '''
+                    npm install
+                    gulp build 
+                '''
+                }
+			}
+		}
+	}
+}
