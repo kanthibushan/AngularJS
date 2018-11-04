@@ -27,5 +27,12 @@ pipeline {
 				}
 			}
 		}
+		
+		stage("Publish to S3") {
+			steps {
+                echo "Publishing test.war to S3Bucket"
+				s3Upload(bucket:"elasticbeanstalk-us-east-2-116760703223", path:'staging/ui', includePathPattern:"test.war", workingDir:"${env.WORKSPACE}/build")
+			}
+		}	
 	}
 }
